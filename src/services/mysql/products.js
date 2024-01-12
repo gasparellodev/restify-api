@@ -57,7 +57,6 @@ const products = deps => {
         )
       })
     },
-
     del: (idProducts) => {
       return new Promise((resolve, reject) => {
         const { connection, errorHandler } = deps

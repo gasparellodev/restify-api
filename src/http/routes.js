@@ -68,6 +68,42 @@ const routes = (server) => {
       res.send(error)
     }
   })
+
+  // Clientes
+
+  server.get('/clients', async (req, res) => {
+    try {
+      res.send(await db.clients().all())
+    } catch (error) {
+      res.send(error)
+    }
+  })
+  server.post('/clients', async (req, res) => {
+    const { name, email } = req.body
+    const client = { name, email }
+    try {
+      const result = await db.clients().save(client)
+      res.send(201, result)
+    } catch (error) {
+      res.send(500, error)
+    }
+  })
+  server.put('/clients', async (req, res) => {
+    const { idClients, name, email } = req.body
+    try {
+      res.send(await db.clients().update({ idClients, name, email }))
+    } catch (error) {
+      res.send(error)
+    }
+  })
+  server.del('/clients/:idClients', async (req, res) => {
+    const { idClients } = req.params
+    try {
+      res.send(await db.clients().del(idClients))
+    } catch (error) {
+      res.send(error)
+    }
+  })
 }
 
 module.exports = routes
