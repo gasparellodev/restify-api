@@ -1,10 +1,10 @@
 const mysqlServer = require('mysql')
 
 const connection = mysqlServer.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'mydb'
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
 })
 
 const errorHandler = (error, msg, rejectFunction) => {
@@ -13,8 +13,10 @@ const errorHandler = (error, msg, rejectFunction) => {
 }
 
 const categoryModule = require('./categories.js')({ connection, errorHandler })
+const productModule = require('./products.js')({ connection, errorHandler })
 module.exports = {
 
-  categories: () => categoryModule
+  categories: () => categoryModule,
+  products: () => productModule
 
 }

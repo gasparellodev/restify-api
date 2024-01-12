@@ -45,12 +45,12 @@ const categories = deps => {
         const { connection, errorHandler } = deps
 
         connection.query('DELETE FROM productscategories WHERE idProductsCategories = ?', [idProductsCategories], (error, results) => {
-          if (error) {
+          if (error || !results.affectedRows) {
             errorHandler(error, `Falha ao remover a categoria ${idProductsCategories}`, reject)
             return false
           }
           console.log('Insert results:', results)
-          resolve({ message: 'Categoria removida com sucesso' })
+          resolve({ message: 'Categoria removida com sucesso', affectedRows: results.affectedRows })
         })
       })
     }
