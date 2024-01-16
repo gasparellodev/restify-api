@@ -70,7 +70,6 @@ const routes = (server) => {
   })
 
   // Clientes
-
   server.get('/clients', async (req, res) => {
     try {
       res.send(await db.clients().all())
@@ -104,6 +103,40 @@ const routes = (server) => {
       res.send(error)
     }
   })
-}
 
+  // Pedido Mestre
+  server.get('/masterOrders', async (req, res) => {
+    try {
+      res.send(await db.masterOrder().all())
+    } catch (error) {
+      res.send(error)
+    }
+  })
+  server.post('/masterOrders', async (req, res) => {
+    const { date, idOrders, idClients } = req.body
+    const masterOrder = { date, idOrders, idClients }
+    try {
+      const result = await db.masterOrder().save(masterOrder)
+      res.send(201, result)
+    } catch (error) {
+      res.send(500, error)
+    }
+  })
+  server.put('/masterOrders', async (req, res) => {
+    const { idMasterOrders, date, idOrders, idClients } = req.body
+    try {
+      res.send(await db.masterOrder().update({ idMasterOrders, date, idOrders, idClients }))
+    } catch (error) {
+      res.send(error)
+    }
+  })
+  server.del('/masterOrders/:idMasterOrders', async (req, res) => {
+    const { idMasterOrders } = req.params
+    try {
+      res.send(await db.clients().del(idMasterOrders))
+    } catch (error) {
+      res.send(error)
+    }
+  })
+}
 module.exports = routes

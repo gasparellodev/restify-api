@@ -15,11 +15,11 @@ const errorHandler = (error, msg, rejectFunction) => {
 const categoryModule = require('./categories.js')({ connection, errorHandler })
 const productModule = require('./products.js')({ connection, errorHandler })
 const clientModule = require('./clients.js')({ connection, errorHandler })
+const masterOrderModule = require('./masterOrder.js')({ connection, errorHandler })
 
 module.exports = {
-
   categories: () => categoryModule,
   products: () => productModule,
-  clients: () => clientModule
-
+  clients: () => clientModule,
+  masterOrder: () => masterOrderModule
 }
